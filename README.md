@@ -2,6 +2,57 @@
 - NPM: 2506588065
 - Kelas: PBP D
 
+Tugas 8
+
+1. Jelaskan perbedaan antara `Navigator.push()`, `Navigator.pushReplacement()`, dan `Navigator.pop()`. Metode apa yang digunakan untuk membuka formulir dari kartu aksi? Jelaskan juga bagaimana opsi Home di drawer membawa pengguna kembali ke halaman utama.
+
+- `Navigator.push()` menambahkan halaman baru ke atas tumpukan (stack) navigasi, jadi halaman sebelumnya masih tersimpan di bawahnya dan pengguna bisa balik lagi pakai tombol Back.
+- `Navigator.pushReplacement()` mengganti halaman yang sedang aktif di posisi teratas stack dengan halaman baru. Halaman yang lama dihapus dari stack, jadi tombol Back tidak akan mengembalikan pengguna ke halaman yang diganti tadi.
+- `Navigator.pop()` menutup atau mengeluarkan halaman paling atas dari stack, sehingga pengguna kembali ke halaman sebelumnya (atau menutup dialog seperti `AlertDialog`).
+
+Untuk membuka halaman formulir (`ProjectFormPage` dan `EducationFormPage`) dari kartu aksi (`ItemCard`), metode yang digunakan adalah `Navigator.push()`. Dengan cara ini, halaman utama tetap ada di bawahnya sehingga pengguna bisa langsung kembali ke halaman utama lewat tombol Back di `AppBar`.
+
+Sementara itu, opsi Halaman Utama (Home) di `LeftDrawer` menggunakan `Navigator.pushReplacement()` menuju `MyHomePage()`. Cara ini dipakai supaya halaman yang sedang dibuka langsung digantikan dengan halaman utama, jadi tumpukan halaman tidak makin menumpuk setiap kali pengguna bolak-balik lewat drawer.
+
+---
+
+2. Bagaimana susunan `Scaffold`, `AppBar`, dan `Drawer` membantu menjaga struktur halaman tetap konsisten? Berikan satu contoh penggunaan warna tema portofolio di lebih dari satu halaman.
+
+`Scaffold` menyediakan kerangka dasar yang sama di setiap halaman, seperti bagian atas untuk `AppBar`, menu samping untuk `Drawer`, dan area isi halaman di `body`. Karena `MyHomePage`, `ProjectFormPage`, dan `EducationFormPage` sama-sama memakai `Scaffold` dengan `AppBar` dan `LeftDrawer` yang sama, posisi judul, tombol menu drawer, dan cara berpindah halaman terasa seragam di seluruh aplikasi.
+
+Contoh penggunaan warna tema portofolio di lebih dari satu halaman adalah pemakaian `Theme.of(context).colorScheme.primary`. Warna ini diatur sekali di `main.dart` (dengan `seedColor: Colors.indigo`), lalu dipakai ulang sebagai warna latar `AppBar` di `MyHomePage`, `ProjectFormPage`, dan `EducationFormPage`, sekaligus untuk warna latar `DrawerHeader` di `LeftDrawer` dan tombol Simpan pada form.
+
+---
+
+3. Mengapa tata letak tersebut dipilih untuk formulir? Jelaskan peran widget pengatur jarak dan widget penggulir ketika ruang layar terbatas.
+
+Formulir di proyek ini disusun secara vertikal menggunakan `Column` di dalam `SingleChildScrollView` karena lebih mudah dibaca dan diisi dari atas ke bawah pada layar ponsel yang sempit. Setiap kolom input diletakkan satu per satu agar label, kotak isian, dan pesan error validasi tidak saling bertabrakan.
+
+- Widget pengatur jarak seperti `Padding` memberi ruang kosong di sekeliling setiap field input dan tombol. Ini membuat tampilan form lebih rapi, tidak terlalu rapat, dan lebih nyaman disentuh saat layar kecil.
+- Widget penggulir seperti `SingleChildScrollView` membuat seluruh isi form tetap bisa digeser ke atas dan ke bawah ketika tinggi layar terbatas, terutama saat keyboard muncul di layar ponsel sehingga tidak terjadi error overflow.
+
+---
+
+4. Apa peran `GlobalKey<FormState>`, `validator`, dan `validate()` saat tombol Simpan ditekan? Berikan satu contoh nilai yang ditolak oleh validasi dan jelaskan mengapa memilih jenis input atau papan ketik saja belum cukup.
+
+- `GlobalKey<FormState>` (`_formKey`) menjadi penghubung agar kita bisa mengakses dan mengontrol kondisi widget `Form`, termasuk menjalankan validasi dan mereset isian form.
+- `validator` adalah fungsi pada tiap field input (`TextFormField`) untuk mengecek apakah data yang diisi sudah sesuai aturan. Jika tidak sesuai, fungsi ini mengembalikan pesan error untuk ditampilkan di bawah field; jika sesuai, mengembalikan `null`.
+- `_formKey.currentState!.validate()` dipanggil saat tombol Simpan ditekan untuk menjalankan seluruh `validator` di dalam form sekaligus. Jika semuanya mengembalikan `null`, barulah `validate()` bernilai `true` dan dialog ringkasan ditampilkan.
+
+Contoh nilai yang ditolak oleh validasi adalah input `"   "` (hanya spasi) pada field Nama Institusi atau input `"202a"` / `"1800"` pada field Tahun Masuk. Memilih jenis input atau papan ketik seperti `TextInputType.number` saja belum cukup karena keyboard hanya membantu tampilan tombol di layar—pengguna tetap bisa membiarkan field kosong, menempelkan (paste) teks bukan angka, atau memasukkan angka di luar rentang yang masuk akal. Oleh karena itu, validasi logika di `validator` tetap diperlukan agar data yang masuk benar-benar valid.
+
+---
+
+AI Disclosure
+
+Dalam pengerjaan Tugas Individu 8 ini, saya memanfaatkan bantuan AI Assistant (Antigravity) dengan rincian sebagai berikut:
+
+- Bagian yang dibantu AI — Pembuatan halaman form baru EducationFormPage di education_form.dart, penambahan rute navigasi pada menu.dart, project_card.dart, dan left_drawer.dart, serta penyusunan jawaban dari pertanyaan-pertanyaan Tugas 8.
+- Strategi Prompting — Meminta AI membaca ketentuan Tugas 8 PBP, memecah pengerjaan menjadi beberapa tahap commit, dan menambahkan form baru sesuai checklist tanpa kode berlebihan.
+- Evaluasi dan Perbaikan Manual — Memeriksa perubahan pada setiap berkas yang diubah di tiap tahap commit.
+
+========================================
+
 Tugas 7
 
 1. Jelaskan apa yang dimaksud dengan widget tree pada Flutter dan bagaimana hubungan induk-anak (parent-child) bekerja antar-widget!
