@@ -43,9 +43,7 @@ class _EducationFormPageState extends State<EducationFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text('Form Tambah Edukasi'),
-        ),
+        title: const Center(child: Text('Form Tambah Edukasi')),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
       ),
@@ -171,7 +169,9 @@ class _EducationFormPageState extends State<EducationFormPage> {
                           context: context,
                           builder: (context) {
                             return AlertDialog(
-                              title: const Text('Edukasi berhasil ditambahkan!'),
+                              title: const Text(
+                                'Edukasi berhasil ditambahkan!',
+                              ),
                               content: SingleChildScrollView(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,7 +179,9 @@ class _EducationFormPageState extends State<EducationFormPage> {
                                     Text('Institusi: ${_institution.trim()}'),
                                     Text('Gelar / Jurusan: ${_degree.trim()}'),
                                     Text('Tahun Masuk: $_startYear'),
-                                    Text('Tanggal Lulus: ${_dateController.text}'),
+                                    Text(
+                                      'Tanggal Lulus: ${_dateController.text}',
+                                    ),
                                   ],
                                 ),
                               ),
